@@ -3,36 +3,38 @@ import java.util.ArrayList;
 public class ClientMain {
 
 	public static void main(String[] args) {
-		IRoot ceo = new Root("王总裁","总裁",100000);
-		IBranch developDep = new Branch("刘一", "研发经理", 10000);
-		IBranch salesDep = new Branch("赵三", "销售经理", 15000);
-		IBranch financeDep = new Branch("王五", "财务经理", 12000);
-		ILeaf a = new Leaf("a","开发人员",2000);
-		ILeaf b = new Leaf("b","开发人员",2000);
-		ILeaf c = new Leaf("c","开发人员",2000);
-		ceo.add(developDep);
-		ceo.add(financeDep);
-		ceo.add(salesDep);
-		developDep.add(a);
-		salesDep.add(b);
-		financeDep.add(c);
-		
+		Branch ceo = compositeCorpTree();
 		System.out.println(ceo.getInfo());
-		getAllSubordinateInfo(ceo.getSubordinateInfo());
+		System.out.println(getTreeInfo(ceo));
 	}
 	
-	private static void getAllSubordinateInfo(ArrayList subordinateList) {
-		int length = subordinateList.size();
-		for(int m = 0;m <length;m++) {
-			Object s = subordinateList.get(m);
+	public static Branch compositeCorpTree(){
+		Branch ceo = new Branch("王总裁","总裁",100000);
+		Branch developDep = new Branch("刘一", "研发经理", 10000);
+		Branch salesDep = new Branch("赵三", "销售经理", 15000);
+		Branch financeDep = new Branch("王五", "财务经理", 12000);
+		Leaf a = new Leaf("a","开发人员",2000);
+		Leaf b = new Leaf("b","开发人员",2000);
+		Leaf c = new Leaf("c","开发人员",2000);
+		ceo.addSubordinate(developDep);
+		ceo.addSubordinate(financeDep);
+		ceo.addSubordinate(salesDep);
+		developDep.addSubordinate(a);
+		salesDep.addSubordinate(b);
+		financeDep.addSubordinate(c);
+		return ceo;
+	}
+	
+	public static String getTreeInfo(Branch root) {
+		ArrayList<Corp> subordinateList = root.getSubordinate();
+		String info = "";
+		for(Corp s : subordinateList) {
 			if(s instanceof Leaf) {
-				ILeaf employee = (ILeaf)s;
-				System.out.println(employee.getInfo());
+				info = info + s.getInfo()+"\n";
 			} else {
-				IBranch branch = (IBranch)s;
-				System.out.println(branch.getInfo());
-				getAllSubordinateInfo(branch.getSubordinateInfo());
+				info = info + s.getInfo() +"\n" + getTreeInfo((Branch)s);
 			}
 		}
+		return info;
 	}
 }
