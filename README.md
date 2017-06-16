@@ -2,6 +2,8 @@
 ## 组合模式
 ### 项目类图
 ![组合模式项目类图](https://github.com/qiaojiuyuan/CompositePattern/raw/master/composite_class.png)
+### 通用类图
+![通用类图](https://github.com/qiaojiuyuan/CompositePattern/raw/master/composite_class.png)
 ### 定义
 ```
 组合模式也叫合成模式，有时又叫部分-整体模式，主要是用来描述部分与整体的关系。
